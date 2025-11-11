@@ -83,7 +83,7 @@
     <div v-if="error" class="mt-3 text-sm text-red-600">{{ error }}</div>
 </template>
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { deleteCartById, fetchCartById } from '../server/cartStore'
 import { fetchProductsApi } from '../server/productStore'
 
