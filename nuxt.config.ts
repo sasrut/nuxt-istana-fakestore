@@ -6,4 +6,7 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  nitro: {
+    compatibilityDate: '2025-11-11',
+  },
 })

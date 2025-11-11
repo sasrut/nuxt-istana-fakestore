@@ -5,7 +5,7 @@
         <!-- Header -->
         <div :class="isMobile? 'overflow-x-scroll' : 'overflow-x-hidden'">         
           <div
-              v-if="isMobile"
+              v-show="isMobile"
               class="grid lg:[grid-template-columns:48px_1fr_1fr_1fr_1fr_1fr] gap-1 bg-gray-200 font-semibold text-gray-700 p-2 rounded-md"
           >
               <div>ID</div>
@@ -103,7 +103,7 @@
 
 <script setup>
 definePageMeta({ name: 'userDashboard' })
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { fetchUsersApi, deleteUsersApi } from '../server/userStore'
 
 const loading = ref(false)
