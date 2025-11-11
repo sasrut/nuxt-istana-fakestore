@@ -3,40 +3,43 @@
         <h2 class="text-2xl font-bold mb-4">User Table</h2>
 
         <!-- Header -->
-        <div
-            class="grid [grid-template-columns:48px_1fr_1fr_1fr_1fr_1fr] gap-1 bg-gray-200 font-semibold text-gray-700 p-2 rounded-md"
-        >
-            <div>ID</div>
-            <div>Nama</div>
-            <div>Username</div>
-            <div>Email</div>
-            <div>Password</div>
-            <div>Actions</div>
-        </div>
-
-        <!-- Rows -->
-        <div
-            v-for="user in users"
-            :key="user.id"
-            class="bg-white shadow-sm grid [grid-template-columns:48px_1fr_1fr_1fr_1fr_1fr] gap-1 items-center border-b p-2 text-gray-800 hover:bg-gray-50 cursor-pointer"
-        >
-            <div>{{ user.id }}</div>
-            <div>{{ user.name.firstname + ' ' + user.name.lastname }}</div>
-            <div>{{ user.username }}</div>
-            <div>{{ user.email }}</div>
-            <div>{{ user.password }}</div>
-            <div class="flex gap-2">
-                <AtomsUIButton @click="openEdit(user)"
-                class="px-2 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
-                >
-                  <font-awesome-icon :icon="['fas', 'fa-pen-to-square']" />
-                </AtomsUIButton>
-                <AtomsUIButton @click="askDelete(user)"
-                class="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
-                >
-                  <font-awesome-icon :icon="['fas', 'fa-trash-can']" />
-                </AtomsUIButton>
-            </div>
+        <div :class="isMobile? 'overflow-x-scroll' : 'overflow-x-hidden'">         
+          <div
+              v-if="isMobile"
+              class="grid lg:[grid-template-columns:48px_1fr_1fr_1fr_1fr_1fr] gap-1 bg-gray-200 font-semibold text-gray-700 p-2 rounded-md"
+          >
+              <div>ID</div>
+              <div>Nama</div>
+              <div>Username</div>
+              <div>Email</div>
+              <div>Password</div>
+              <div>Actions</div>
+          </div>
+  
+          <!-- Rows -->
+          <div
+              v-for="user in users"
+              :key="user.id"
+              class="bg-white shadow-sm grid lg:[grid-template-columns:48px_1fr_1fr_1fr_1fr_1fr] gap-3 lg:gap-1 items-center border-b p-2 text-gray-800 hover:bg-gray-50 cursor-pointer"
+          >
+              <div>{{ user.id }}</div>
+              <div>{{ user.name.firstname + ' ' + user.name.lastname }}</div>
+              <div>{{ user.username }}</div>
+              <div>{{ user.email }}</div>
+              <div>{{ user.password }}</div>
+              <div class="flex gap-2">
+                  <AtomsUIButton @click="openEdit(user)"
+                  class="px-2 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
+                  >
+                    <font-awesome-icon :icon="['fas', 'fa-pen-to-square']" />
+                  </AtomsUIButton>
+                  <AtomsUIButton @click="askDelete(user)"
+                  class="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
+                  >
+                    <font-awesome-icon :icon="['fas', 'fa-trash-can']" />
+                  </AtomsUIButton>
+              </div>
+          </div>
         </div>
     </div>
 
@@ -111,6 +114,8 @@ const isEditOpen = ref(false)
 const userToEdit = ref(null)
 const error = ref('')
 const users = ref([])
+
+const isMobile = computed(() => window.innerWidth < 768)
 
 function handlerNewUser(newUser) {
   console.log('new user received:', newUser)
