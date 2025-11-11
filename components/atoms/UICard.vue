@@ -1,6 +1,6 @@
 <template>
   <div
-    class="hover:bg-gray-50 rounded-lg border border-gray-200 bg-white shadow p-4 flex gap-2 transition flex-col"
+    class="hover:bg-gray-50 rounded-lg border border-gray-200 bg-white shadow p-2 lg:p-4 flex gap-2 transition flex-col"
     :class="[computedClasses, {'opacity-60': busy}]"
   >
     <slot />

@@ -1,36 +1,36 @@
 <template>
-    <div class="grid grid-cols-3 gap-6 justify-between items-start">
-        <div class="grid col-span-2 min-w-full justify-center align-center items-center gap-2">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 justify-between items-start">
+        <div class="grid lg:col-span-2 min-w-full justify-center align-center items-center gap-2">
             <AtomsUICard
               v-for="cart in cartItems"
               :key="cart.id"
-              layout="horizontal"
+              :layout="isMobile? 'vertical': 'horizontal'"
               class="mb-4">
-                <div class="grid grid-cols-3 p-6 relative">
-                    <div class="grid grid-cols-1">
-                        <img
-                            v-if="cart.image"
-                            :src="cart.image"
-                            alt="img"
-                            class="max-h-full w-auto max-w-[120px] rounded object-contain"
-                            />
-                    </div>
-                    <div class="grid grid-cols-1 col-span-2 gap-2">
-                        <div class="font-bold font-sans text-xl">{{ cart.title }}</div>
-                        <div class="text-gray-500">{{ cart.description }}</div>
-                        <div class="flex flex-col justify-between w-full">
-                            <div class="flex flex-row justify-between items-center mt-auto">
-                                <div class="text-gray-700 font-medium">Price: $ {{ cart.price }}</div>
-                                <div class="text-gray-700 font-medium">Quantity: x {{ cart.quantity }}</div>
-                                <div class="text-gray-900 font-bold text-xl">Total: $ {{ cart.price * cart.quantity }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <AtomsUIButton variant="ghost" class="absolute top-2 right-2" @click="askDelete(cart)">
-                        <!-- <div class="fa fa-trash h-[20px] text-lg items-center text-red-600 cursor-pointer"></div> -->
-                         <font-awesome-icon :icon="['fas', 'fa-trash']" class="h-[20px] text-lg items-center text-red-600 cursor-pointer"/>
-                    </AtomsUIButton>
-                </div>
+              <div class="grid lg:grid-cols-3 p-6 relative">
+                  <div class="grid grid-cols-1">
+                      <img
+                          v-if="cart.image"
+                          :src="cart.image"
+                          alt="img"
+                          class="max-h-full w-auto max-w-[120px] rounded object-contain"
+                          />
+                  </div>
+                  <div class="grid grid-cols-1 col-span-2 gap-2">
+                      <div class="font-bold font-sans text-xl">{{ cart.title }}</div>
+                      <div class="text-gray-500">{{ cart.description }}</div>
+                      <div class="flex flex-col justify-between w-full">
+                          <div class="flex flex-row justify-between items-center mt-auto">
+                              <div class="text-gray-700 font-medium">Price: $ {{ cart.price }}</div>
+                              <div class="text-gray-700 font-medium">Quantity: x {{ cart.quantity }}</div>
+                              <div class="text-gray-900 font-bold text-xl">Total: $ {{ cart.price * cart.quantity }}</div>
+                          </div>
+                      </div>
+                  </div>
+                  <AtomsUIButton variant="ghost" class="absolute top-2 right-2" @click="askDelete(cart)">
+                      <!-- <div class="fa fa-trash h-[20px] text-lg items-center text-red-600 cursor-pointer"></div> -->
+                       <font-awesome-icon :icon="['fas', 'fa-trash']" class="h-[20px] text-lg items-center text-red-600 cursor-pointer"/>
+                  </AtomsUIButton>
+              </div>
             </AtomsUICard>
         </div>
         <!-- confirm -->
@@ -83,7 +83,7 @@
     <div v-if="error" class="mt-3 text-sm text-red-600">{{ error }}</div>
 </template>
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import { deleteCartById, fetchCartById } from '../server/cartStore'
 import { fetchProductsApi } from '../server/productStore'
 
@@ -93,6 +93,8 @@ const products = ref([])
 const cartItems = ref([])
 const shippingCost = ref(5.00)
 const loading = ref(false)
+
+const isMobile = computed(() => window.innerWidth < 768)
 
 function mergeCartWithProducts() {
   if (!carts.value.products) return
